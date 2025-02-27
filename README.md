@@ -1,4 +1,4 @@
-# Kokoro Dollar 「心ドラ」
+# Kokoro Dollar 「心ドル」
 
 **Tagline**: *“Kokoro Dollar: Return to the Heart of Crypto with Stablecoins that Earn Native Yield.”*
 
