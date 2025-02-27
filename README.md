@@ -149,9 +149,16 @@ In **KokoroUSD**, only addresses with `MINTER_ROLE` can call `mint(...)` to crea
 
 2. **Liquidations & Collateral**  
    - The vault code has simple liquidation logic—no partial auctions. Real stablecoins have more advanced designs.
+   - In the future, we plan on having an AVS-based agent handle liquidations with priority access. This will be enforced via our own contracts and Uniswap V4 Hooks. 
 
 3. **Yield Distribution**  
    - Real yield from restaked ETH is not fully integrated. For the hackathon, an admin function in `StakedKokoroUSD` simulates yield injection.
+
+4. **Governance Token and Safety Module**
+   - We plan on having a governance token ($KOKORO) that votes on protocol upgrades. Users will be able to stake their $KOKORO in two different ways.
+   - We plan to integrate with Tally's Liquid Staked Governance protocol, which will allow users to stake their $KOKORO for $govKOKORO, which earns yield while allowing for voting power to be used.
+   - We also plan to have a native $sKOKORO - users earn part of the yield the protocol achives via restaking. In exchange, staked KOKORO is used as collatoral for our safety module.
+   - In case the protocol incurs bad debt, this collatoral can be used to make Kokoro Dollar whole again. 
 
 ---
 
