@@ -2,6 +2,7 @@
 pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/access/AccessControl.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import "./KokoroUSD.sol";
 import "./AggregatorV3Interface.sol";
 
@@ -19,7 +20,7 @@ import "./AggregatorV3Interface.sol";
  *         - For ratio checks, depositUSD is similarly computed, then compare
  *           depositUSD*(10000)/userDebt (since userDebt is in 1e18 decimals).
  */
-contract KokoroVault is AccessControl {
+contract KokoroVault is AccessControl, ReentrancyGuard {
     // Roles
     bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
 
@@ -58,7 +59,7 @@ contract KokoroVault is AccessControl {
      *      depositUSD = (ethPrice * msg.value) / 1e8
      *      minted = depositUSD * 10000 / collateralRatioBps
      */
-    function depositAndMint() external payable {
+    function depositAndMint() external payable nonReentrant {
         require(msg.value > 0, "No ETH sent");
 
         deposits[msg.sender] += msg.value;
@@ -83,7 +84,7 @@ contract KokoroVault is AccessControl {
     /**
      * @dev Admin can manually restake if vault’s balance >= 32
      */
-    function tryRestake() external onlyRole(ADMIN_ROLE) {
+    function tryRestake() external onlyRole(ADMIN_ROLE) nonReentrant {
         require(address(this).balance >= RESTAKE_THRESHOLD, "Not enough to restake");
         _restake();
     }
@@ -99,7 +100,7 @@ contract KokoroVault is AccessControl {
      *      1) forcibly burn user’s kUSD
      *      2) transfer user’s ETH to liquidator
      */
-    function liquidate(address user) external {
+    function liquidate(address user) external nonReentrant {
         // Must be below threshold to liquidate
         uint256 ratioBps = _getUserCollateralRatioBps(user);
         require(ratioBps < liquidationThresholdBps, "Position is healthy");
