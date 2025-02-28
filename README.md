@@ -15,7 +15,7 @@
 - **Centralized Collateral**: Many stablecoins rely on off-chain entities holding real-world dollars.  
 - **Trust Minimization**: KokoroUSD attempts to keep yield generation *on-chain* through **EigenLayer** restaking.  
 - **Native Yield**: Instead of bridging fiat or requiring off-chain banks, we restake ETH to generate yield.  
-- **AI Agents**: Provide a user-friendly interface (using Autonome) that orchestrates deposits, staking, and yield behind the scenes.
+- **AI Agents**: Provide a user-friendly interface (using Hyperbolic) that orchestrates deposits, staking, and yield behind the scenes.
 
 ## Project Components
 
